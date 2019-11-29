@@ -1,16 +1,33 @@
 # layermanager
-Elevation profile plugin for Origo.
+Elevation profile plugin for Origo. Shows profiles for linestrings that has z-dimension. 
 
 #### Example usage of Elevation profile as plugin
+Add .css and .js-files and then config:
+
 index.html:
+
+```javascript
+<link href="plugin/elevation-profile.css" rel="stylesheet">
+<script src="plugin/elevation-profile.min.js"></script>
+```
+```javascript
+var origo = Origo('index.json');
 origo.on('load', function(viewer) {
   var ep = ElevationProfile(viewer);
   viewer.addComponent(ep);
 });
+```
 
-config.json:
-"attributes": [
-  {
+index.json:
+```json
+"layers": [
+ {
+  "name": "profile-layer",
+  "attributes": [
+   {
     "showProfile": true
-  }
+   }
+  ]
+ }
 ]
+```
