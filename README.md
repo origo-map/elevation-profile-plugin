@@ -2,7 +2,7 @@
 Elevation profile plugin for Origo. Shows profiles for linestrings that has z-dimension. 
 
 #### Example usage of Elevation profile as plugin
-Add .css and .js-files and then config:
+Add .css and .js-files (after origo.js) and then config:
 
 index.html:
 

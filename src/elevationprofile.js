@@ -26,7 +26,7 @@ const ElevationProfile = function ElevationProfile(viewer) {
         pt.setStyle([]);
       }
     }
-    if (attribute.showProfile && feature.getGeometry().getType() === 'LineString' && (feature.getGeometry().getLayout() === 'XYZ' || feature.getGeometry().getLayout() === 'XYZM')) {
+    if (attribute.showProfile && (feature.getGeometry().getType() === 'LineString' || feature.getGeometry().getType() === 'MultiLineString') && (feature.getGeometry().getLayout() === 'XYZ' || feature.getGeometry().getLayout() === 'XYZM')) {
       const profileList = document.createElement('li');
       const profile = new ol_control_Profil({
         target: profileList,
