@@ -38,7 +38,10 @@ const ElevationProfile = function ElevationProfile(viewer) {
           xtitle: 'Distans (km)',
           time: 'Tid',
           altitude: 'Höjd',
-          distance: 'Distans'
+          distance: 'Distans',
+          altitudeUnits: "m",
+          distanceUnitsM: "m",
+          distanceUnitsKM: "km"
         }
       });
       map.addControl(profile);
