@@ -38,7 +38,10 @@ const ElevationProfile = function ElevationProfile(viewer) {
           xtitle: 'Distans (km)',
           time: 'Tid',
           altitude: 'Höjd',
-          distance: 'Distans'
+          distance: 'Distans',
+          altitudeUnits: 'm',
+          distanceUnitsM: 'm',
+          distanceUnitsKM: 'km'
         }
       });
       map.addControl(profile);
@@ -83,6 +86,19 @@ const ElevationProfile = function ElevationProfile(viewer) {
       map.addLayer(vectorLayer);
       vectorSource.addFeature(pt);
       viewer.getControlByName('featureInfo').addAttributeType('showProfile', showProfile);
+    },
+    onShowElevationProfile(feature) {
+      const attribute = { showProfile: true };
+      const attributes = {};
+      const profileList = showProfile(feature, attribute, attributes);
+      const featureInfo = viewer.getControlByName('featureInfo');
+      const obj = {};
+      obj.feature = feature;
+      obj.title = 'Markhöjd profil';
+      obj.content = profileList;
+      const extent = feature.getGeometry().getExtent();
+      const center = (extent[0] + extent[2])/2;
+      featureInfo.render([obj], 'overlay', [center,extent[3]], { ignorePan: true });
     },
     onRender() {
     },

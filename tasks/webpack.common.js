@@ -5,31 +5,34 @@ module.exports = {
     './elevation-profile.js'
   ],
   module: {
-    rules: [
-      {
-        test: /\.(js)$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader',
-        query: {
-          cacheDirectory: false,
-          presets: [
-            ['@babel/preset-env', {
-              targets: {
-                browsers: ['chrome >= 39']
-              },
-              modules: false,
-              useBuiltIns: 'usage'
-            }]
-          ],
-          plugins: [
-            ['@babel/plugin-transform-runtime', {
-              regenerator: true,
-              corejs: 2
-            }]
-          ]         
-        }
-      }     
-    ]
+    rules: [{
+      test: /\.js$/,
+      enforce: 'pre',
+      use: ['source-map-loader']
+    },
+    {
+      test: /\.(js)$/,
+      exclude: /node_modules/,
+      loader: 'babel-loader',
+      options: {
+        cacheDirectory: false,
+        presets: [
+          ['@babel/preset-env', {
+            targets: {
+              browsers: ['chrome >= 39']
+            },
+            modules: false,
+            useBuiltIns: 'usage'
+          }]
+        ],
+        plugins: [
+          ['@babel/plugin-transform-runtime', {
+            regenerator: true,
+            corejs: 2
+          }]
+        ]
+      }
+    }]
   },
   externals: ['Origo'],
   resolve: {
@@ -39,5 +42,5 @@ module.exports = {
     new webpack.ProvidePlugin({
       fetch: 'imports-loader?this=>global!exports-loader?global.fetch!whatwg-fetch'
     })
-  ]  
+  ]
 };

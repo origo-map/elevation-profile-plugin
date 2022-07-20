@@ -1,36 +1,35 @@
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
   output: {
-    path: `/build/js/`,
+    path: `${__dirname}/../../origo/plugins`,
     publicPath: '/build/js',
-    filename: 'ep.js',
+    filename: 'elevation-profile.js',
     libraryTarget: 'var',
     libraryExport: 'default',
     library: 'ElevationProfile'
   },
   mode: 'development',
   module: {
-    rules: [
-      {
-        test: /\.scss$/,
-        use: [
-          {
-            loader: "style-loader"
-          },            
-          {
-            loader: "css-loader"
-          },          
-          {
-            loader: "sass-loader"     
-          }
-        ]
-      }      
-    ]
-  },  
+    rules: [{
+      test: /\.scss$/,
+      use: ['style-loader','css-loader','sass-loader']
+    }]
+  },
   devServer: {
-    contentBase: './',
-    port: 9008
+    devMiddleware: {
+      publicPath: '/build/js',
+      serverSideRender: true,
+      writeToDisk: true,
+    },
+    static: './',
+    port: 9009,
+    liveReload: true,
+    allowedHosts: 'auto',
+    headers: {
+      'Access-Control-Allow-Origin': 'http://localhost:9966',
+      'Access-Control-Allow-Credentials': 'true',
+    },
   }
 });

@@ -1,17 +1,24 @@
 const webpack = require('webpack');
-const merge = require('webpack-merge');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { merge } = require('webpack-merge');
+const TerserPlugin = require('terser-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
   optimization: {
     nodeEnv: 'production',
-    minimize: true
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        parallel: true,
+        extractComments: false
+      })]
   },
-  performance: { hints: false },
+  performance: {
+    hints: false
+  },
   output: {
-    path: `${__dirname}/../build/`,
+    path: `${__dirname}/../build/js`,
     filename: 'elevation-profile.min.js',
     libraryTarget: 'var',
     libraryExport: 'default',
@@ -19,17 +26,16 @@ module.exports = merge(common, {
   },
   devtool: false,
   mode: 'production',
+  module: {
+    rules: [{
+      test: /\.(sc|c)ss$/,
+      use: ['css-loader','sass-loader','postcss-loader']
+    }]
+  },
   plugins: [
-    new UglifyJSPlugin({
-      uglifyOptions: {
-        output: {
-          beautify: false
-        }
-      }
-    }),
     new webpack.optimize.AggressiveMergingPlugin(),
-    new CopyWebpackPlugin([
-      'css/**'
-    ])
+    new MiniCssExtractPlugin({
+      filename: '../css/lmsearch.css'
+    })
   ]
 });
