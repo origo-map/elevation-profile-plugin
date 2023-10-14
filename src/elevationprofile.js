@@ -9,7 +9,14 @@ const Stroke = Origo.ol.style.Stroke;
 const Feature = Origo.ol.Feature;
 const Point = Origo.ol.geom.Point;
 
-const ElevationProfile = function ElevationProfile(viewer) {
+const ElevationProfile = function ElevationProfile(viewer, options = {}) {
+  let {
+    width = 240,
+    height = 150,
+    zoomable = false,
+    selectable = false
+  } = options;
+
   let map;
   let pt;
   let vectorSource;
@@ -30,7 +37,10 @@ const ElevationProfile = function ElevationProfile(viewer) {
       const profileList = document.createElement('li');
       const profile = new ol_control_Profil({
         target: profileList,
-        width: 240,
+        width,
+        height,
+        zoomable,
+        selectable,
         info: {
           zmin: 'Min höjd',
           zmax: 'Max höjd',
@@ -38,7 +48,15 @@ const ElevationProfile = function ElevationProfile(viewer) {
           xtitle: 'Distans (km)',
           time: 'Tid',
           altitude: 'Höjd',
-          distance: 'Distans'
+          distance: 'Distans',
+          speed: 'Hastighet',
+          totaltime: 'Totala tiden',
+          realtime: 'Realtid',
+          totaldistance: 'Totala distansen (km)',
+          altitudeUnits: ' m',
+          distanceUnitsM: ' m',
+          distanceUnitsKM: ' km',
+          speedUnit: ' km/h'
         }
       });
       map.addControl(profile);

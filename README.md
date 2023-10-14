@@ -13,7 +13,12 @@ index.html:
 ```javascript
 var origo = Origo('index.json');
 origo.on('load', function(viewer) {
-  var ep = ElevationProfile(viewer);
+  var ep = ElevationProfile(viewer, {
+      width: 240,
+      height: 150,
+      zoomable: false,
+      selectable: false,
+	});
   viewer.addComponent(ep);
 });
 ```
